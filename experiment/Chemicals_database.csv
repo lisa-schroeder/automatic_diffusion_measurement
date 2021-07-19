@@ -1,0 +1,3 @@
+NameShort;NameLong;Density at 20 degreeC / g/cm3;Molar mass / g/mol;Reference
+H2O;water;0.9982;18.02;"http://jupiter.plymouth.edu/~jsduncan/courses/2012_Spring/Techniques/Exams/DensityOfWater-vs-Temp.pdf; https://pubchem.ncbi.nlm.nih.gov/compound/water"
+EtOH;ethanol;0.7893;46.07;https://pubchem.ncbi.nlm.nih.gov/compound/ethanol
