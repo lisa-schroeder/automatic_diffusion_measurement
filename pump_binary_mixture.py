@@ -342,7 +342,7 @@ def pump_through_NMR():
     print("ready for measurement")
 
 mix_in_glass_via_syringe1()
-#pump_through_NMR()
+pump_through_NMR()
 
 ###################ACTION CODE END##########################
 
