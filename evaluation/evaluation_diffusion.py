@@ -41,7 +41,7 @@ def find_D(values):
             y = y + [ln(y_raw[j+1]/y_raw[0])]
 
        # do a linear regression
-        model = LinearRegression().fit(x, y)
+        model = LinearRegression().fit(x, y)        # https://realpython.com/linear-regression-in-python/
 
         D = D + [[values.loc[0, i], -model.coef_[0]]]
 
@@ -52,4 +52,3 @@ D = find_D(values)
 data_frame = pd.DataFrame(D)
 data_frame.columns = ['Measurement', 'Diffusion Coefficient in 10^(-9) m^2 s^(-1)']
 data_frame.to_csv("diffusion_coefficient_automated.csv")
-# pd.concat([values, data_frame]).to_csv("Values3.csv")
