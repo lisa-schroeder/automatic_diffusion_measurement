@@ -14,7 +14,7 @@ maximum_gradient = 0.2977       # T*m^(-1)
 relative_gradient = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 # import values to evaluate
-values = pd.read_csv("integral_values_automated.csv", sep=",", header = None)
+values = pd.read_csv("integral_values_manual.csv", sep=",", header = None)
 print(values)
 
 
@@ -27,6 +27,7 @@ def find_D(values):
     x = x.reshape((-1, 1))
 
     D = []      # list in which diffusion coefficients will be entered
+    r_sq = []       # list in which coefficient of determination R^2 will be entered
 
     for i in range(len(values.columns)):
         # y_raw is list containing integrals as values
@@ -44,11 +45,16 @@ def find_D(values):
         model = LinearRegression().fit(x, y)        # https://realpython.com/linear-regression-in-python/
 
         D = D + [[values.loc[0, i], -model.coef_[0]]]
+        r_sq  = r_sq + [[values.loc[0,i], model.score(x, y)]]
 
-    return(D)
+    return(D, r_sq)
 
 # export results in .csv file
-D = find_D(values)
-data_frame = pd.DataFrame(D)
-data_frame.columns = ['Measurement', 'Diffusion Coefficient in 10^(-9) m^2 s^(-1)']
-data_frame.to_csv("diffusion_coefficient_automated.csv")
+D, r_sq = find_D(values)
+print(r_sq)
+data_frame_D = pd.DataFrame(D)
+data_frame_D.columns = ['Measurement', 'Diffusion Coefficient in 10^(-9) m^2 s^(-1)']
+data_frame_D.to_csv("diffusion_coefficient_manual.csv")
+data_frame_r_sq = pd.DataFrame(r_sq)
+data_frame_r_sq.columns = ['Measurement', 'Coefficient of Determination R^2']
+data_frame_r_sq.to_csv("diffusion_coefficient_r_sq_manual.csv")
