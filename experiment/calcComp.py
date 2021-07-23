@@ -7,13 +7,13 @@ def calcComp(chemicals, mixratio, components, amount):
     # output: vol is a list, containing the volume of each component
     mixratio_norm = []      # create a normalized mixratio list, called mixratio_norm
     for i in range(len(mixratio)):
-        mixratio_norm = mixratio_norm + [mixratio[i]/sum(mixratio)]     # https://www.codespeedy.com/how-to-add-all-numbers-in-a-list-in-python/
+        mixratio_norm = mixratio_norm + [mixratio[i]/sum(mixratio)]
     M = []      # List including molar masses
     for i in range(len(components)):
         M = M + [chemicals[components[i]].molarMass]   # get the molar mass of each component
     rho = []        # List including densities
     for i in range(len(components)):
-        rho = rho + [chemicals[components[i]].density]      # get the density of each component      https://www.w3schools.com/python/python_classes.asp
+        rho = rho + [chemicals[components[i]].density]      # get the density of each component
     volcalc = 0     # Calculate volume fraction-denominator
     for i in range(len(components)):
         volcalc = volcalc + mixratio_norm[i] * M[i] / rho[i]        # volume of one mol liquid * mixratio_norm
