@@ -18,7 +18,7 @@ script to calculate the self-diffusion coefficient from integral values (evaluat
 integrals of measured data (integral_values_manual.csv, integral_values_automated.csv);  
 calculated self-diffusion coefficient (diffusion_coefficient_manual.csv, diffusion_coefficient_automated.csv)  
 coefficient of determination R^2 (diffusion_coefficient_r_sq_manual.csv, diffusion_coefficient_r_sq_automated.csv)  
-uncertainty of diffusion measurements (uncertainty_measurement.csv (integral values), uncertainty_diffusion_coefficient.csv, uncertainty_diffusion_coefficient_r_sq.csv)
+uncertainty of diffusion measurements (integral_values_uncertainty.csv, uncertainty_diffusion_coefficient.csv, uncertainty_diffusion_coefficient_r_sq.csv)
 
 # tests
 This repository contains the test of the calculation script (testCalcComp.py)  
