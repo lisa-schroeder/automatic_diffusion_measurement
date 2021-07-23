@@ -1,7 +1,5 @@
-# https://realpython.com/linear-regression-in-python/
-
 import numpy as np
-from numpy import log as ln     # https://www.delftstack.com/howto/numpy/natural-log-python/
+from numpy import log as ln
 from sklearn.linear_model import LinearRegression
 import math
 import pandas as pd
@@ -42,7 +40,7 @@ def find_D(values):
             y = y + [ln(y_raw[j+1]/y_raw[0])]
 
        # do a linear regression
-        model = LinearRegression().fit(x, y)        # https://realpython.com/linear-regression-in-python/
+        model = LinearRegression().fit(x, y)
 
         D = D + [[values.loc[0, i], -model.coef_[0]]]
         r_sq  = r_sq + [[values.loc[0,i], model.score(x, y)]]
