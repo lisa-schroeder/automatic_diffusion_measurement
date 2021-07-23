@@ -29,48 +29,23 @@ syringe0_025 = Syringe(0.728366, 60, 10)
 #manually enter, which syringe is at which pump, e.g.:
 syringe_dict = {
     "neM-LP_1_pump" : syringe2_5,
-    "neM-LP_2_pump" : syringe2_5,
-    "neM-LP_3_pump" : syringe25,
-    "neM-LP_4_pump" : syringe1,
-    "neM-LP_5_pump" : syringe0_025,
-    "neM-LP_6_pump" : syringe2_5
 }
 
 # valve 1 lights up
 # valve 1 is 1
 # manually enter, which valves are set how (qmix: 0-9; NeM: 0-1)
 qmix_valve_input = {
-    "QmixV_1_valve" : 0,
-    "QmixV_2_valve" : 6,
     "QmixV_3_valve" : 0,
-    "QmixV_4_valve" : 4,
-    "QmixV_5_valve" : 5,
-    "QmixV_6_valve" : 6
 }
 neM_LP_valve_input = {
     "neM-LP_1_valve" : 1,
-    "neM-LP_2_valve" : 1,
-    "neM-LP_3_valve" : 1,
-    "neM-LP_4_valve" : 1,
-    "neM-LP_5_valve" : 1,
-    "neM-LP_6_valve" : 1
 }
 
 qmix_valve_output = {
-    "QmixV_1_valve" : 0,
-    "QmixV_2_valve" : 6,
     "QmixV_3_valve" : 2,
-    "QmixV_4_valve" : 6,
-    "QmixV_5_valve" : 5,
-    "QmixV_6_valve" : 4
 }
 neM_LP_valve_output = {
     "neM-LP_1_valve" : 1,
-    "neM-LP_2_valve" : 1,
-    "neM-LP_3_valve" : 1,
-    "neM-LP_4_valve" : 0,
-    "neM-LP_5_valve" : 0,
-    "neM-LP_6_valve" : 0
 }
 
 '''----------------create Syringe-Dict end---------------'''
@@ -191,9 +166,6 @@ chemList = chemicals.loadChemicalsList("chemList")
 filename = input("Enter Filename: ")
 deadVolume = float(input("Insert deadVolume: "))
 
-# Define mixture
-# vol = calcComp.calcComp(chemList, mixratio, components, amount)
-# print(vol)
 
 # pumping a test volume, 100 %, 50 %, 25 % and 10 % of the possible volume of each syringe
 test_volume = [1, 0.5, 0.25, 0.1]
@@ -213,15 +185,12 @@ for i in range(len(test_volume)):
     print("change valve position for aspirating")
     for valve in qmix_valve_input.keys():
         Valves_Qmix[valve].switch_valve_to_position(qmix_valve_input[valve])
-        # print(valve, " Position: ", Valves_Qmix[valve].actual_valve_position())
     for valve in neM_LP_valve_input.keys():
         Valves_pumps[valve].switch_valve_to_position(neM_LP_valve_input[valve])
-        # print(valve, " Position: ", Valves_pumps[valve].actual_valve_position())
 
     print("Actual Valve Position NeM-LP_1_valve: ", Valves_pumps["neM-LP_1_valve"].actual_valve_position())
 
     # start filling the pump
-    # Pumps["neM-LP_1_pump"].aspirate(p*Pumps["neM-LP_1_pump"].get_volume_max(), 0.5*Pumps["neM-LP_1_pump"].get_flow_rate_max())
     print("ready to start pumping? Press any key to continue")
     input()
     print("Start Pumping")
@@ -231,10 +200,8 @@ for i in range(len(test_volume)):
     timer = qmixbus.PollingTimer(600000)
     timer.wait_until(Pumps["neM-LP_1_pump"].is_pumping, False)
     print("Stop the time and wait for pump to finish")
-    # abhängig von der Füllhöhe oder von maximal möglicher Füllung warten?
-    # time.sleep(syringe_dict["neM-LP_1_pump"].filled_wait_time)
     print("\nFilling level of Pump 1:", Pumps["neM-LP_1_pump"].get_fill_level())
-    target_filling.append(Pumps["neM-LP_1_pump"].get_fill_level())      # https://www.askpython.com/python/array/python-add-elements-to-an-array
+    target_filling.append(Pumps["neM-LP_1_pump"].get_fill_level())
     time_syringe_full.append(input("insert time for syringe to fill: "))
     print("confirm the pump is full and can be dispensed")
     input()
@@ -243,19 +210,13 @@ for i in range(len(test_volume)):
     print("change valve position for dispensing")
     for valve in qmix_valve_output.keys():
         Valves_Qmix[valve].switch_valve_to_position(qmix_valve_output[valve])
-        # print(valve, " Position: ", Valves_Qmix[valve].actual_valve_position())
     for valve in neM_LP_valve_output.keys():
         Valves_pumps[valve].switch_valve_to_position(neM_LP_valve_output[valve])
-        # print(valve, " Position: ", Valves_pumps[valve].actual_valve_position())
 
     #start emptying the pump
     print("dispense pump")
-    # Pumps["neM-LP_1_pump"].dispense(Pumps["neM-LP_1_pump"].get_fill_level(), 0.5*Pumps["neM-LP_1_pump"].get_flow_rate_max())
     Pumps["neM-LP_1_pump"].dispense(Pumps["neM-LP_1_pump"].get_fill_level(), 0.05)
     timer.wait_until(Pumps["neM-LP_1_pump"].is_pumping, False)
-    #wait, until pump is empty
-    #print("time to wait for emptying the pump", p*Pumps["neM-LP_1_pump"].get_volume_max()/Pumps["neM-LP_1_pump"].get_flow_rate_max()+5)
-    #time.sleep(p*Pumps["neM-LP_1_pump"].get_volume_max()*Pumps["neM-LP_1_pump"].get_flow_rate_max()+5)
     print("\nFilling level of Pump 1:", Pumps["neM-LP_1_pump"].get_fill_level())
 
     glass_full = float(input("weight of full glass: "))
@@ -265,7 +226,7 @@ for i in range(len(test_volume)):
     target_deadVolume.append(target_filling[i] - deadVolume)
     deviation_dead.append((actual_filling[i]-target_deadVolume[i])/target_deadVolume[i])
 
-    # create .csv       https://www.geeksforgeeks.org/python-save-list-to-csv/
+    # create .csv
     dict = {"target_filling": target_filling, "actual_filling": actual_filling, "deviation_from_actual_filling": deviation, "target_filling - dead Volume": target_deadVolume, "devation from actual filling incl. dead Volume": deviation_dead, "time_for_syringe_to_fill": time_syringe_full}
     df = pd.DataFrame(dict)
     df.to_csv(filename)
